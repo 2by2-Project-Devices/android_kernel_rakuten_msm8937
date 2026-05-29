@@ -1691,6 +1691,7 @@ static int fts_ts_resume(struct device *dev)
 /*****************************************************************************
 * TP Driver
 *****************************************************************************/
+#if defined(CONFIG_DRM_PANEL)
 static int fts_ts_check_dt(struct device_node *np)
 {
 	int i;
@@ -1714,6 +1715,12 @@ static int fts_ts_check_dt(struct device_node *np)
 
 	return -ENODEV;
 }
+#else
+static int fts_ts_check_dt(struct device_node *np)
+{
+	return 0;
+}
+#endif
 
 static int fts_ts_check_default_tp(struct device_node *dt, const char *prop)
 {
