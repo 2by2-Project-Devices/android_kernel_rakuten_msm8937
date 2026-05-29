@@ -613,6 +613,17 @@ int mdss_dsi_panel_reset(struct mdss_panel_data *pdata, int enable)
 			} else
 #endif
 
+#if defined(CONFIG_PROJECT_c330ae_tinno)
+			for (i = 0; i < pdata->panel_info.rst_seq_len; ++i) {
+				gpio_set_value((ctrl_pdata->tp_rst_gpio),
+					pdata->panel_info.rst_seq[i]);
+				
+				if (pdata->panel_info.rst_seq[++i])
+					usleep_range(10000,
+					10000 + 10);
+			}
+#endif
+
 			for (i = 0; i < pdata->panel_info.rst_seq_len; ++i) {
 				gpio_set_value((ctrl_pdata->rst_gpio),
 					pdata->panel_info.rst_seq[i]);
@@ -723,7 +734,11 @@ int mdss_dsi_panel_reset(struct mdss_panel_data *pdata, int enable)
 				gpio_set_value((ctrl_pdata->rst_gpio), 1);
 			else
 #endif
+#if defined(CONFIG_PROJECT_c330ae_tinno)
+			gpio_set_value((ctrl_pdata->rst_gpio), 1);
+#else
 			gpio_set_value((ctrl_pdata->rst_gpio), 0);
+#endif
 			gpio_free(ctrl_pdata->rst_gpio);
 		}
 #if IS_ENABLED(CONFIG_MACH_FAMILY_XIAOMI_ULYSSE)
