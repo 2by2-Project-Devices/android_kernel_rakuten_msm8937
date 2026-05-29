@@ -6,6 +6,8 @@
  * multimedia blocks come from the shared base DTSI files.
  */
 
+#include <dt-bindings/clock/msm-clocks-8952.h>
+
 #include "c330ae-camera-pinctrl.dtsi"
 #include "c330ae-camera.dtsi"
 #include "c330ae-pinctrl.dtsi"

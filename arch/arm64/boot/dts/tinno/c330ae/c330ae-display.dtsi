@@ -144,3 +144,15 @@
 &mdss_dsi1 {
 	status = "disabled";
 };
+
+&lcdb_ldo_vreg {
+	qcom,ldo-voltage-mv = <5500>;
+	regulator-min-microvolt = <5500000>;
+	regulator-max-microvolt = <5500000>;
+};
+
+&lcdb_ncp_vreg {
+	qcom,ncp-voltage-mv = <5500>;
+	regulator-min-microvolt = <5500000>;
+	regulator-max-microvolt = <5500000>;
+};
