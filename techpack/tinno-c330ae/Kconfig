@@ -11,6 +11,7 @@ if MACH_TINNO_C330AE
 source "techpack/tinno-c330ae/cxd224x/Kconfig"
 source "techpack/tinno-c330ae/foursemi/Kconfig"
 source "techpack/tinno-c330ae/ft8006p/Kconfig"
+source "techpack/tinno-c330ae/hall_sensor/Kconfig"
 
 endif # MACH_TINNO_C330AE
 

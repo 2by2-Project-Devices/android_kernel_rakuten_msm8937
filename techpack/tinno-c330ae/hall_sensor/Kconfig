@@ -1,0 +1,6 @@
+config HALL_SENSOR
+	tristate "Hall sensor support"
+	depends on OF && INPUT
+	help
+	  Say Y here to enable the Hall sensor input driver used by
+	  c330ae-class devices.
