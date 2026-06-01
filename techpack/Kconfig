@@ -14,4 +14,6 @@ source "techpack/camera-legacy-m/Kconfig"
 source "techpack/xiaomi-msm8937/Kconfig"
 source "techpack/xiaomi-sdm439/Kconfig"
 
+source "techpack/audio-legacy/asoc/codecs/foursemi/Kconfig"
+
 endmenu
