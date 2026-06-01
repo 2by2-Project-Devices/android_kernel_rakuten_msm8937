@@ -885,4 +885,11 @@ config INPUT_SC27XX_VIBRA
 	  To compile this driver as a module, choose M here. The module will
 	  be called sc27xx_vibra.
 
+config HALL_SENSOR
+	tristate "Hall sensor support"
+	depends on OF && INPUT
+	help
+	  Say Y here to enable the Hall sensor input driver used by
+	  c330ae-class devices.
+
 endif
