@@ -54,7 +54,16 @@
 #define FTS_CHIP_IDC            ((FTS_CHIP_TYPE & FLAGBIT(FLAG_IDC_BIT)) == FLAGBIT(FLAG_IDC_BIT))
 #define FTS_HID_SUPPORTTED      ((FTS_CHIP_TYPE & FLAGBIT(FLAG_HID_BIT)) == FLAGBIT(FLAG_HID_BIT))
 
+#if defined(CONFIG_PROJECT_c330ae_tinno)
+//0x11, FT8006P
+//0x0B, FT8006S
+#define FTS_CHIP_TYPE_MAPPING {\
+	{0x11, 0x86, 0x22, 0x86, 0x22, 0x86, 0xA2, 0x00, 0x00},\
+	{0x0B, 0xF0, 0x06, 0xF0, 0x06, 0xF0, 0xA6, 0x00, 0x00},\
+}
+#else
 #define FTS_CHIP_TYPE_MAPPING {{0x81, 0x54, 0x52, 0x54, 0x52, 0x00, 0x00, 0x54, 0x5C}}
+#endif
 
 #define FILE_NAME_LENGTH                    128
 #define ENABLE                              1
