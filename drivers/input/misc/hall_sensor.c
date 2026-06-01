@@ -285,7 +285,7 @@ static ssize_t hall_driver_info_show(struct device_driver *ddri, char *buf)
 {
 	return sprintf(buf, "%d\n", g_hall_state);
 }
-static DRIVER_ATTR(hall_state,     S_IWUSR | S_IRUGO, hall_driver_info_show, NULL);
+static struct driver_attribute driver_attr_hall_state = __ATTR(hall_state, 0444, hall_driver_info_show, NULL);
 
 static struct platform_driver hall_driver;
 //END<20160729><create hall node for wiko>wangyanhui
