@@ -3012,8 +3012,13 @@ static struct snd_soc_dai_link msm_int_be_dai[] = {
 		.stream_name = "Quaternary MI2S Playback",
 		.cpu_dai_name = "msm-dai-q6-mi2s.3",
 		.platform_name = "msm-pcm-routing",
+#if defined(CONFIG_MACH_TINNO_C330AE)
+		.codec_dai_name = "fs16xx_codec_left",
+		.codec_name = "fs16xx.2-0034",
+#else
 		.codec_dai_name = "snd-soc-dummy-dai",
 		.codec_name = "snd-soc-dummy",
+#endif
 		.no_pcm = 1,
 		.dpcm_playback = 1,
 		.id = MSM_BACKEND_DAI_QUATERNARY_MI2S_RX,
