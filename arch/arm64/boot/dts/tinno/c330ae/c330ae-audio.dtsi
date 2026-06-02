@@ -125,3 +125,12 @@
 		status = "okay";
 	};
 };
+
+&rpm_bus {
+	rpm-regulator-ldoa6 {
+		pm8953_l6: regulator-l6 {
+			regulator-always-on;
+			regulator-boot-on;
+		};
+	};
+};
