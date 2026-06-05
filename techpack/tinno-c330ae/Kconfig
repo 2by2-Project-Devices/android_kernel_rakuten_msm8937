@@ -7,6 +7,9 @@ config MACH_TINNO_C330AE
 	  Say Y here to enable support for Tinno C330AE project.
 
 if MACH_TINNO_C330AE
+
+source "techpack/tinno-c330ae/ft8006p/Kconfig"
+
 endif # MACH_TINNO_C330AE
 
 endmenu

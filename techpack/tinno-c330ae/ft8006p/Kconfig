@@ -1,0 +1,11 @@
+#
+# Focaltech Touchscreen driver configuration
+#
+
+config TOUCHSCREEN_FTS_FT8006P_C330AE
+    bool "Focaltech Touchscreen"
+    depends on I2C
+    default n
+    help
+      Say Y here if you have Focaltech touch panel.
+      If unsure, say N.
