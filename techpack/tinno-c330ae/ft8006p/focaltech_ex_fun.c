@@ -33,6 +33,7 @@
 * 1.Included header files
 *****************************************************************************/
 #include "focaltech_core.h"
+#include <linux/uaccess.h>
 
 /*****************************************************************************
 * Private constant and macro definitions using #define
@@ -1135,7 +1136,10 @@ static struct attribute_group fts_attribute_group = {
 
 u8 tp_ver_info;
 u8 vendor_info;
-extern int store_tp_info(const char *const str);
+static inline int store_tp_info(const char *const str)
+{
+	return 0;
+}
 int store_tp_info_c330(void) 
 {
 	char buf_temp[80];
