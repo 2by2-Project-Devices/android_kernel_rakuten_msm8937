@@ -1,0 +1,5 @@
+config SND_SOC_FS16XX
+	tristate "Foursemi FS16XX amplifier"
+	depends on I2C
+	help
+	  Enables support for the Foursemi FS16XX smart amplifier.

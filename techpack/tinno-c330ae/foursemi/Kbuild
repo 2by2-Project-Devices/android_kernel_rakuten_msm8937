@@ -1,0 +1,7 @@
+ifdef CONFIG_SND_SOC_FS16XX
+	SND_SOC_FS16XX_OBJS += fs16xx.o
+	SND_SOC_FS16XX_OBJS += fs16xx_preset.o
+	SND_SOC_FS16XX_OBJS += fs16xx_calibration.o
+endif
+obj-$(CONFIG_SND_SOC_FS16XX) += fs16xx_dlkm.o
+fs16xx_dlkm-y := $(SND_SOC_FS16XX_OBJS)
