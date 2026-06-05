@@ -1,0 +1,12 @@
+menu "Tinno C330AE project"
+	depends on ARCH_SDM439
+
+config MACH_TINNO_C330AE
+	bool "Support for Tinno C330AE project"
+	help
+	  Say Y here to enable support for Tinno C330AE project.
+
+if MACH_TINNO_C330AE
+endif # MACH_TINNO_C330AE
+
+endmenu
