@@ -43,6 +43,7 @@
 
 &i2c_5 {
 	status = "ok";
+	qcom,disable-dma;
 
 	nfc@28 {
 		compatible = "sony,cxd224x-i2c";
