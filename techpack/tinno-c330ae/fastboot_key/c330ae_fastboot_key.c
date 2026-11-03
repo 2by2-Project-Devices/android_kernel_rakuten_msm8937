@@ -24,6 +24,7 @@
 #include <linux/jiffies.h>
 #include <linux/kernel.h>
 #include <linux/moduleparam.h>
+#include <linux/pstore_ram.h>
 #include <linux/reboot.h>
 #include <linux/string.h>
 #include <linux/workqueue.h>
@@ -82,6 +83,13 @@ static void reboot_to_bootloader(const char *why)
 		pr_err("%s, but reboot path not ready; booting normally\n", why);
 		return;
 	}
+
+	/*
+	 * This boot is usually an escape from a boot that just failed.
+	 * Put that boot's pstore logs back so recovery can still read
+	 * them, instead of this short boot's logs replacing them.
+	 */
+	ramoops_keep_old_logs();
 
 	pr_emerg("%s, rebooting into bootloader\n", why);
 	kernel_restart("bootloader");
