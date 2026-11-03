@@ -518,6 +518,40 @@ static struct ramoops_context oops_cxt = {
 	},
 };
 
+static void ramoops_keep_old_prz(struct persistent_ram_zone *prz,
+				 const char *name)
+{
+	size_t size;
+
+	if (!prz)
+		return;
+
+	size = persistent_ram_old_size(prz);
+	if (!size) {
+		pr_info("no previous %s log to keep\n", name);
+		return;
+	}
+
+	persistent_ram_zap(prz);
+	persistent_ram_write(prz, persistent_ram_old(prz), size);
+	pr_info("kept previous %s log (%zu bytes) for the next boot\n",
+		name, size);
+}
+
+/*
+ * Every boot zaps the console/pmsg zones at probe time and keeps the
+ * previous boot's contents only in kernel memory. Write them back into
+ * the persistent zones so they survive one more reboot. Anything logged
+ * after this call is appended after the restored log.
+ */
+void ramoops_keep_old_logs(void)
+{
+	struct ramoops_context *cxt = &oops_cxt;
+
+	ramoops_keep_old_prz(cxt->cprz, "console");
+	ramoops_keep_old_prz(cxt->mprz, "pmsg");
+}
+
 static void ramoops_free_przs(struct ramoops_context *cxt)
 {
 	int i;

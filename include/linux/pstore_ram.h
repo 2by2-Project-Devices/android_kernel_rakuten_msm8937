@@ -81,6 +81,12 @@ void persistent_ram_free_old(struct persistent_ram_zone *prz);
 ssize_t persistent_ram_ecc_string(struct persistent_ram_zone *prz,
 	char *str, size_t len);
 
+#ifdef CONFIG_PSTORE_RAM
+void ramoops_keep_old_logs(void);
+#else
+static inline void ramoops_keep_old_logs(void) { }
+#endif
+
 /*
  * Ramoops platform data
  * @mem_size	memory size for ramoops
