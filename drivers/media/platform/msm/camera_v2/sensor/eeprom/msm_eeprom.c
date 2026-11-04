@@ -499,6 +499,7 @@ static int eeprom_init_config(struct msm_eeprom_ctrl_t *e_ctrl,
 	void *argp)
 {
 	int rc =  0;
+	int rc_pd = 0;
 	struct msm_eeprom_cfg_data *cdata = argp;
 	struct msm_sensor_power_setting_array *power_setting_array = NULL;
 	struct msm_camera_power_ctrl_t *power_info;
@@ -584,17 +585,21 @@ static int eeprom_init_config(struct msm_eeprom_ctrl_t *e_ctrl,
 	}
 
 	rc = eeprom_parse_memory_map(e_ctrl, memory_map_arr);
-	if (rc < 0) {
+	if (rc < 0)
 		pr_err("%s::%d memory map parse failed\n", __func__, __LINE__);
-		goto free_mem;
-	}
 
-	rc = msm_camera_power_down(power_info, e_ctrl->eeprom_device_type,
+	/*
+	 * Always power down after a successful power up, even when parsing
+	 * the memory map failed, otherwise the regulators, GPIOs, MCLK and
+	 * CCI stay enabled forever.
+	 */
+	rc_pd = msm_camera_power_down(power_info, e_ctrl->eeprom_device_type,
 		&e_ctrl->i2c_client);
-	if (rc < 0) {
+	if (rc_pd < 0) {
 		pr_err("%s:%d Power down failed rc %d\n",
-			__func__, __LINE__, rc);
-		goto free_mem;
+			__func__, __LINE__, rc_pd);
+		if (rc >= 0)
+			rc = rc_pd;
 	}
 
 free_mem:
@@ -1496,6 +1501,7 @@ static int eeprom_init_config32(struct msm_eeprom_ctrl_t *e_ctrl,
 	void *argp)
 {
 	int rc =  0;
+	int rc_pd = 0;
 	struct msm_eeprom_cfg_data32 *cdata32 = argp;
 	struct msm_sensor_power_setting_array *power_setting_array = NULL;
 	struct msm_sensor_power_setting_array32 *power_setting_array32 = NULL;
@@ -1593,17 +1599,19 @@ static int eeprom_init_config32(struct msm_eeprom_ctrl_t *e_ctrl,
 	}
 
 	rc = eeprom_parse_memory_map(e_ctrl, mem_map_array);
-	if (rc < 0) {
+	if (rc < 0)
 		pr_err("%s:%d memory map parse failed\n",
 			__func__, __LINE__);
-		goto free_mem;
-	}
 
-	rc = msm_camera_power_down(power_info,
+	/* Always power down after a successful power up, see above. */
+	rc_pd = msm_camera_power_down(power_info,
 		e_ctrl->eeprom_device_type, &e_ctrl->i2c_client);
-	if (rc < 0)
+	if (rc_pd < 0) {
 		pr_err("%s:%d Power down failed rc %d\n",
-			__func__, __LINE__, rc);
+			__func__, __LINE__, rc_pd);
+		if (rc >= 0)
+			rc = rc_pd;
+	}
 
 free_mem:
 	kfree(power_setting_array32);
